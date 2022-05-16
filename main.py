@@ -2,7 +2,7 @@ from telegram.ext import Updater, InlineQueryHandler, CommandHandler,CallbackCon
 import requests
 # import re
 import os
-import schedule
+# import schedule
 from telegram import Update
 
 PORT = int(os.environ.get('PORT', '8443'))
