@@ -1,6 +1,7 @@
 from telegram.ext import Updater, InlineQueryHandler, CommandHandler,CallbackContext
 import requests
 # import re
+import logging
 import os
 # import schedule
 from telegram import Update
@@ -13,6 +14,12 @@ m_help = "You can use the following commands:\n"\
 def help(update: Update, context: CallbackContext):
     """Send a message when the command /help is issued."""
     update.message.reply_text(m_help)
+
+
+def error(update, context):
+    """Log Errors caused by Updates."""
+    logging.warning('Update "%s" ', update)
+    logging.exception(context.error)
 # def get_url():
 #     contents = requests.get('https://dog.ceo/api/breeds/image/random').json()
 #     url = contents['message']
@@ -55,6 +62,8 @@ def main():
         # schedule.run_pending()
     #     # The sleep prevents the CPU to work unnecessarily.
     #     time.sleep(1)
+    dp.add_error_handler(error) 
+
 
 
 if __name__ == '__main__':
