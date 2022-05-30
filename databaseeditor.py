@@ -1,6 +1,9 @@
 import csv
 import psycopg2
 import glob
+from psycopg2 import sql
+
+
 conn = psycopg2.connect('postgres://oynkonierltdgy:2e6c52a982ebe5d83448dd0f2a0a59115d028e9e6d1d2a394c713953e13c87ba@ec2-107-22-238-112.compute-1.amazonaws.com:5432/da7522agbf56fl')
 cur = conn.cursor()
 
@@ -13,9 +16,17 @@ cur = conn.cursor()
 # {value.append(file.split('\\')[1].split('.')[0]) for file in glob.glob("w_seltexts\*.txt")} 
 
 b = 'asdasd'
-a = "['zazazaza','sdfsf']"
-cur.execute("CREATE TABLE use(words text)")
-cur.execute("INSERT INTO use (words) VALUES  ?", (a))
+query = sql.SQL('''
+    insert into use (words)
+    values {}
+''').format(sql.Identifier(b))
+
+cur.execute (query, ('b'))
+
+
+# a = ['zazazaza','sdfsf']
+# cur.execute("CREATE TABLE use(words text)")
+# cur.execute(f"INSERT INTO use (words) VALUES  {a}")
 
 cur.execute('SELECT * FROM use')
 for i in cur.fetchall():
